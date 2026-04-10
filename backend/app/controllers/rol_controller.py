@@ -23,8 +23,7 @@ class RolController (Controller):
     
     @staticmethod
     def create(request) -> tuple[Response, int]:
-        data = request.get_json() or None
-        nombre= data.get('nombre')
+        nombre= request.get('nombre')
         
         error :str | None = None
         if nombre is None:
@@ -44,8 +43,7 @@ class RolController (Controller):
         
     @staticmethod
     def update(request, id)->tuple[Response, int]:
-        data = request.get_json() or None
-        nombre= data.get('nombre')
+        nombre= request.get('nombre')
         
         error :str | None = None
         if nombre is None:

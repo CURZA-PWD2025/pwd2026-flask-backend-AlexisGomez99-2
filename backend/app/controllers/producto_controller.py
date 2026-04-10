@@ -23,15 +23,14 @@ class ProductoController(Controller):
     
     @staticmethod
     def create(request) -> tuple[Response, int]:
-        data = request.get_json() or None
-        nombre = data.get('nombre')
-        descripcion = data.get('descripcion')
-        precio_costo = data.get('precio_costo')
-        precio_venta = data.get('precio_venta')
-        stock_actual = data.get('stock_actual')
-        stock_minimo = data.get('stock_minimo')
-        categoria_id = data.get('categoria_id')
-        proveedor_id = data.get('proveedor_id')
+        nombre = request.get('nombre')
+        descripcion = request.get('descripcion')
+        precio_costo = request.get('precio_costo')
+        precio_venta = request.get('precio_venta')
+        stock_actual = request.get('stock_actual')
+        stock_minimo = request.get('stock_minimo')
+        categoria_id = request.get('categoria_id')
+        proveedor_id = request.get('proveedor_id')
         
         error :str | None = None
         if nombre is None:
@@ -68,16 +67,15 @@ class ProductoController(Controller):
         return jsonify ({'message': error}), 422
     
     @staticmethod
-    def update(request, id)->tuple[Response, int]:
-        data = request.get_json() or None
-        nombre= data.get('nombre')
-        descripcion= data.get('descripcion')
-        precio_costo = data.get('precio_costo')
-        precio_venta = data.get('precio_venta')
-        stock_actual = data.get('stock_actual')
-        stock_minimo = data.get('stock_minimo')
-        categoria_id = data.get('categoria_id')
-        proveedor_id = data.get('proveedor_id')
+    def update(request:dict, id)->tuple[Response, int]:
+        nombre= request.get('nombre')
+        descripcion= request.get('descripcion')
+        precio_costo = request.get('precio_costo')
+        precio_venta = request.get('precio_venta')
+        stock_actual = request.get('stock_actual')
+        stock_minimo = request.get('stock_minimo')
+        categoria_id = request.get('categoria_id')
+        proveedor_id = request.get('proveedor_id')
         
         error :str | None = None
         if nombre is None:

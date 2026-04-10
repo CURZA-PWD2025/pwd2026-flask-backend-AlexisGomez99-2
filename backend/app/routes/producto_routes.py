@@ -19,13 +19,13 @@ def show(id):
 @jwt_required()
 @rol_access(['admin'])
 def create():
-    return ProductoController.create(request.get_json())
+    return ProductoController.create(request.get_json() or None)
 
 @productos.route("/<int:id>", methods=['PUT'])
 @jwt_required()
 @rol_access(['admin'])
 def update(id):
-    return  ProductoController.update(request=request.get_json(), id=id)
+    return  ProductoController.update(request=request.get_json() or None, id=id)
     
 @productos.route("/<int:id>", methods=['DELETE'])
 @jwt_required()

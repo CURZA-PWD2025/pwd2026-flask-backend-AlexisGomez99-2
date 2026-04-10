@@ -20,7 +20,7 @@ def show(id):
 @movimientos_stock.route("/", methods=['POST'])
 @jwt_required()
 def create():
-    return MovimientoStockController.create(request.get_json())
+    return MovimientoStockController.create(request.get_json() or None)
 
 @movimientos_stock.route('/mis', methods=['GET'])
 @jwt_required()
@@ -31,7 +31,7 @@ def get_my_movements():
 @movimientos_stock.route("/<int:id>", methods=['PUT'])
 @jwt_required()
 def update(id):
-    return  MovimientoStockController.update(request=request.get_json(), id=id)
+    return  MovimientoStockController.update(request=request.get_json() or None, id=id)
     
 @movimientos_stock.route("/<int:id>", methods=['DELETE'])
 @jwt_required()

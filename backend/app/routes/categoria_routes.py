@@ -19,13 +19,13 @@ def show(id):
 @jwt_required()
 @rol_access(['admin'])
 def create():
-    return CategoriaController.create(request.get_json())
+    return CategoriaController.create(request.get_json() or None)
 
 @categorias.route("/<int:id>", methods=['PUT'])
 @jwt_required()
 @rol_access(['admin'])
 def update(id):
-    return  CategoriaController.update(request=request.get_json(), id=id)
+    return  CategoriaController.update(request=request.get_json() or None, id=id)
     
 @categorias.route("/<int:id>", methods=['DELETE'])
 @jwt_required()

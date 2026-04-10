@@ -22,10 +22,9 @@ class CategoriaController(Controller):
         return jsonify({"message": 'categoria no encontrada'}), 404
     
     @staticmethod
-    def create(request) -> tuple[Response, int]:
-        data = request.get_json() or None
-        nombre = data.get('nombre')
-        descripcion = data.get('descripcion')
+    def create(request:dict) -> tuple[Response, int]:
+        nombre = request.get('nombre')
+        descripcion = request.get('descripcion')
         
         error :str | None = None
         if nombre is None:
@@ -43,10 +42,9 @@ class CategoriaController(Controller):
         return jsonify ({'message': error}), 422
     
     @staticmethod
-    def update(request, id)->tuple[Response, int]:
-        data = request.get_json() or None
-        nombre = data.get('nombre')
-        descripcion = data.get('descripcion')
+    def update(request:dict, id)->tuple[Response, int]:
+        nombre = request.get('nombre')
+        descripcion = request.get('descripcion')
         
         error :str | None = None
         if nombre is None:

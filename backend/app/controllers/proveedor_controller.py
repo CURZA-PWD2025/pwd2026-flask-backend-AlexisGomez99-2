@@ -23,11 +23,10 @@ class ProveedorController(Controller):
     
     @staticmethod
     def create(request) -> tuple[Response, int]:
-        data = request.get_json() or None
-        nombre = data.get('nombre')
-        contacto = data.get('contacto')
-        telefono = data.get('telefono')
-        email = data.get('email')
+        nombre = request.get('nombre')
+        contacto = request.get('contacto')
+        telefono = request.get('telefono')
+        email = request.get('email')
         
         error :str | None = None
         if nombre is None:
@@ -56,11 +55,10 @@ class ProveedorController(Controller):
     
     @staticmethod
     def update(request, id)->tuple[Response, int]:
-        data = request.get_json() or None
-        nombre= data.get('nombre')
-        contacto= data.get('contacto')
-        telefono = data.get('telefono')
-        email = data.get('email')
+        nombre= request.get('nombre')
+        contacto= request.get('contacto')
+        telefono = request.get('telefono')
+        email = request.get('email')
 
         error :str | None = None
         if nombre is None:

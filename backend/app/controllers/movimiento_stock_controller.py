@@ -31,13 +31,12 @@ class MovimientoStockController(Controller):
         return jsonify({"message": 'datos no encontrados'}), 404
     
     @staticmethod
-    def create(request) -> tuple[Response, int]:
-        data = request or None
-        tipo = data.get('tipo')
-        cantidad = data.get('cantidad')
-        motivo = data.get('motivo')
-        producto_id = data.get('producto_id')
-        user_id = data.get('user_id')
+    def create(request:dict) -> tuple[Response, int]:
+        tipo = request.get('tipo')
+        cantidad = request.get('cantidad')
+        motivo = request.get('motivo')
+        producto_id = request.get('producto_id')
+        user_id = request.get('user_id')
         
         error :str | None = None
         if tipo is None:
@@ -77,12 +76,11 @@ class MovimientoStockController(Controller):
     
     @staticmethod
     def update(request, id)->tuple[Response, int]:
-        data = request.get_json() or None
-        tipo = data.get('tipo')
-        cantidad = data.get('cantidad')
-        motivo = data.get('motivo')
-        producto_id = data.get('producto_id')
-        user_id = data.get('user_id')
+        tipo = request.get('tipo')
+        cantidad = request.get('cantidad')
+        motivo = request.get('motivo')
+        producto_id = request.get('producto_id')
+        user_id = request.get('user_id')
         
         error :str | None = None
         if tipo is None:

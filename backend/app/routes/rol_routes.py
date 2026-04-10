@@ -21,13 +21,13 @@ def show(id):
 @jwt_required()
 @rol_access(['admin'])
 def create():
-    return RolController.create(request.get_json())
+    return RolController.create(request.get_json() or None)
 
 @roles.route("/<int:id>", methods=['PUT'])
 @jwt_required()
 @rol_access(['admin'])
 def update(id):
-    return  RolController.update(request=request.get_json(), id=id)
+    return  RolController.update(request=request.get_json() or None, id=id)
     
 
 @roles.route("/<int:id>", methods=['DELETE'])
