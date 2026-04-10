@@ -11,7 +11,9 @@ class Producto(BaseModel):
     stock_actual = db.Column(db.Integer, default=0) 
     stock_minimo = db.Column(db.Integer, default=0) 
     
-
+    proveedor = db.relationship('Proveedor')
+    categoria = db.relationship('Categoria')
+    proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=True)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
 
     def to_dict(self):
@@ -20,5 +22,6 @@ class Producto(BaseModel):
             'nombre': self.nombre,
             'precio_venta': float(self.precio_venta),
             'stock_actual': self.stock_actual,
-            'categoria_id': self.categoria_id
+            'proveedor': self.proveedor.to_dict() if self.proveedor else None,
+            'categoria': self.categoria.to_dict() if self.categoria else None
         }

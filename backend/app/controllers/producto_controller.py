@@ -31,6 +31,7 @@ class ProductoController(Controller):
         stock_actual = data.get('stock_actual')
         stock_minimo = data.get('stock_minimo')
         categoria_id = data.get('categoria_id')
+        proveedor_id = data.get('proveedor_id')
         
         error :str | None = None
         if nombre is None:
@@ -45,6 +46,8 @@ class ProductoController(Controller):
             error = 'El stock_actual es requerido'
         if stock_minimo is None:
             error = 'El stock_minimo es requerido'
+        if proveedor_id is None:
+            error = 'El proveedor_id es requerido'
             
         if error is None:
             try:
@@ -53,7 +56,8 @@ class ProductoController(Controller):
                                     precio_costo=precio_costo,
                                     precio_venta=precio_venta,
                                     stock_actual=stock_actual,
-                                    stock_minimo=stock_minimo, 
+                                    stock_minimo=stock_minimo,
+                                    proveedor_id=proveedor_id,
                                     categoria_id=categoria_id)
                 db.session.add(producto)
                 db.session.commit()
@@ -73,7 +77,8 @@ class ProductoController(Controller):
         stock_actual = data.get('stock_actual')
         stock_minimo = data.get('stock_minimo')
         categoria_id = data.get('categoria_id')
-
+        proveedor_id = data.get('proveedor_id')
+        
         error :str | None = None
         if nombre is None:
             error = 'El nombre es requerido'
@@ -87,6 +92,8 @@ class ProductoController(Controller):
             error = 'El stock_actual es requerido'
         if stock_minimo is None:
             error = 'El stock_minimo es requerido'
+        if proveedor_id is None:
+            error = 'El proveedor_id es requerido'
             
         if error is None:
             producto = db.session.get(Producto, id)
@@ -98,6 +105,7 @@ class ProductoController(Controller):
                     producto.precio_venta = precio_venta
                     producto.stock_actual = stock_actual
                     producto.stock_minimo = stock_minimo
+                    producto.proveedor_id = proveedor_id
                     producto.categoria_id = categoria_id
                     db.session.commit()
                     return jsonify({'message':'Producto modificado con exito'}), 200

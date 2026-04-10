@@ -7,6 +7,8 @@ class MovimientoStock(BaseModel):
     tipo = db.Column(db.String(10), nullable=False)
     cantidad = db.Column(db.Integer, nullable=False) 
     motivo = db.Column(db.String(200), nullable=True) 
+    user = db.relationship('User')
+    producto = db.relationship('Producto')
     producto_id = db.Column(db.Integer, db.ForeignKey('productos.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
@@ -15,6 +17,7 @@ class MovimientoStock(BaseModel):
             'id': self.id,
             'tipo': self.tipo,
             'cantidad': self.cantidad,
-            'producto_id': self.producto_id,
+            'producto': self.producto.to_dict() if self.producto else None,
+            'user': self.user.to_dict() if self.user else None,
             'fecha': self.created_at.isoformat()
         }
