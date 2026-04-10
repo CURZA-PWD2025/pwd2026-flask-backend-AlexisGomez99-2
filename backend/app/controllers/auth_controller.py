@@ -54,3 +54,10 @@ class AuthController:
                 return jsonify({'access_token': access_token, 'rol': user.rol.nombre if user.rol else None, 'nombre': user.nombre}), 200
             return jsonify({'message': "Credenciales inválidas"}), 401
         return jsonify ({'message': error}), 422
+    
+    @staticmethod
+    def get_me(id)->tuple[Response, int]:
+        usuario = db.session.get(User, id)
+        if usuario:
+            return jsonify(usuario.to_dict()), 200
+        return jsonify({"message": 'usuario no encontrado'}), 404

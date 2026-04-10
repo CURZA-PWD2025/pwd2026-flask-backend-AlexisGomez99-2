@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from app.models.movimiendo_stock import MovimientoStock
+from app.models.producto import Producto
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -22,8 +23,16 @@ class MovimientoStockController(Controller):
         return jsonify({"message": 'movimiento_stock no encontrado'}), 404
     
     @staticmethod
+    def get_movimientos(id)->tuple[Response, int]:
+        movimientos_stock_list = db.session.execute(db.select(MovimientoStock).filter_by(user_id=id).order_by(db.desc(MovimientoStock.id))).scalars().all()
+        if len( movimientos_stock_list) >0:
+            movimientos_to_dict = [movimiento_stock.to_dict() for movimiento_stock in movimientos_stock_list ]
+            return jsonify(movimientos_to_dict), 200 
+        return jsonify({"message": 'datos no encontrados'}), 404
+    
+    @staticmethod
     def create(request) -> tuple[Response, int]:
-        data = request.get_json() or None
+        data = request or None
         tipo = data.get('tipo')
         cantidad = data.get('cantidad')
         motivo = data.get('motivo')
@@ -41,10 +50,18 @@ class MovimientoStockController(Controller):
             error = 'El producto_id es requerido'
         if user_id is None:
             error = 'El user_id es requerido'
-        
+
+        producto = db.session.get(Producto,producto_id)
+        if producto.stock_actual < cantidad and tipo ==  'salida':
+            error= 'No hay stock suficiente.'
             
         if error is None:
             try:
+                if tipo == 'salida':
+                    producto.stock_actual = producto.stock_actual - cantidad
+                else:
+                    producto.stock_actual = producto.stock_actual + cantidad
+
                 movimiento_stock = MovimientoStock(tipo=tipo, 
                                     cantidad=cantidad,
                                     motivo=motivo,

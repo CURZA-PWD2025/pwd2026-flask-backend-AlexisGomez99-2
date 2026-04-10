@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(categorias,url_prefix='/categorias')
     app.register_blueprint(productos, url_prefix='/productos')
     app.register_blueprint(proveedores,url_prefix='/proveedores')
-    app.register_blueprint(movimientos_stock,url_prefix='/movimientos_stock')
+    app.register_blueprint(movimientos_stock,url_prefix='/movimientos')
     app.register_blueprint(auth_bp,url_prefix='/auth')
     
     @app.route('/')
