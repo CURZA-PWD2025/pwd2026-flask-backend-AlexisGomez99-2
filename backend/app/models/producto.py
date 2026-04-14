@@ -16,12 +16,22 @@ class Producto(BaseModel):
     proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=True)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
 
-    def to_dict(self):
-        return {
+    movimientos = db.relationship('MovimientoStock', back_populates='producto')
+    proveedor = db.relationship('Proveedor', back_populates='productos')
+    categoria = db.relationship('Categoria', back_populates='productos')
+
+    def to_dict(self, incluye_movimiento=True, incluye_proveedor=True, incluye_categoria=True):
+        data= {
             'id': self.id,
             'nombre': self.nombre,
             'precio_venta': float(self.precio_venta),
-            'stock_actual': self.stock_actual,
-            'proveedor': self.proveedor.to_dict() if self.proveedor else None,
-            'categoria': self.categoria.to_dict() if self.categoria else None
+            'stock_actual': self.stock_actual
         }
+        if incluye_categoria:
+            data['categoria'] = self.categoria.to_dict(incluye_categoria=False)
+        if incluye_proveedor:
+            data['proveedor'] = self.proveedor.to_dict(incluye_proveedor=False)
+        if incluye_movimiento:
+            data['movimientos'] = [movimiento.to_dict(incluye_producto=False) for movimiento in self.movimientos]
+        
+        return data

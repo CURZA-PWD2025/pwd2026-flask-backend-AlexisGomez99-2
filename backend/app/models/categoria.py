@@ -6,9 +6,14 @@ class Categoria(BaseModel):
     nombre = db.Column(db.String(100), nullable=False, unique=True)
     descripcion = db.Column(db.Text, nullable=True)
 
-    def to_dict(self):
-        return {
+    productos = db.relationship('Producto', back_populates='categoria')
+
+    def to_dict(self, incluye_categoria=True):
+        data = {
             'id': self.id,
             'nombre': self.nombre,
             'descripcion': self.descripcion
         }
+        if incluye_categoria:
+            data['productos'] = [producto.to_dict(incluye_categoria=False,incluye_movimiento=False) for producto in self.productos]
+        return data
