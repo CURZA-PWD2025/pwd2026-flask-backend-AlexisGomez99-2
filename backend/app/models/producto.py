@@ -25,7 +25,8 @@ class Producto(BaseModel):
             'id': self.id,
             'nombre': self.nombre,
             'precio_venta': float(self.precio_venta),
-            'stock_actual': self.stock_actual
+            'stock_actual': self.stock_actual,
+            'activo': self.activo
         }
         if incluye_categoria:
             data['categoria'] = self.categoria.to_dict(incluye_categoria=False)

@@ -12,7 +12,8 @@ class Categoria(BaseModel):
         data = {
             'id': self.id,
             'nombre': self.nombre,
-            'descripcion': self.descripcion
+            'descripcion': self.descripcion,
+            'activo': self.activo
         }
         if incluye_categoria:
             data['productos'] = [producto.to_dict(incluye_categoria=False,incluye_movimiento=False) for producto in self.productos]

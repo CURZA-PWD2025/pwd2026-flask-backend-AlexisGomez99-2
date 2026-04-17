@@ -17,7 +17,8 @@ class MovimientoStock(BaseModel):
             'id': self.id,
             'tipo': self.tipo,
             'cantidad': self.cantidad,
-            'fecha': self.created_at.isoformat()
+            'fecha': self.created_at.isoformat(),
+            'activo': self.activo
         }
         if incluye_user:
             data['user']= self.user.to_dict(incluye_movimiento=False)

@@ -16,7 +16,8 @@ class Rol(BaseModel):
             'id': self.id,
             'nombre': self.nombre,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'activo': self.activo
         }
         if incluye_users:
             data['users'] = [user.to_dict(incluye_rol=False) for user in self.users]

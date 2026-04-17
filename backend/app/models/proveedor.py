@@ -15,7 +15,8 @@ class Proveedor(BaseModel):
             'nombre': self.nombre,
             'contacto': self.contacto,
             'telefono': self.telefono,
-            'email': self.email
+            'email': self.email,
+            'activo': self.activo
         }
         if incluye_proveedor:
             data['productos']= [producto.to_dict(incluye_proveedor=False,incluye_movimiento=False) for producto  in self.productos]
