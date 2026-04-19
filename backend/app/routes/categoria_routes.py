@@ -3,7 +3,7 @@ from flask import request, Blueprint
 from flask_jwt_extended import jwt_required
 from app.decorators.rol_access import rol_access
 
-categorias = Blueprint('categorias', __name__, url_prefix='/roles')
+categorias = Blueprint('categorias', __name__, url_prefix='/categorias')
 
 @categorias.route('/')
 @jwt_required()

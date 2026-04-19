@@ -3,7 +3,7 @@ from flask import request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.decorators.rol_access import rol_access
 
-movimientos_stock = Blueprint('movimientos', __name__, url_prefix='/roles')
+movimientos_stock = Blueprint('movimientos', __name__, url_prefix='/movimientos')
 
 @movimientos_stock.route('/')
 @jwt_required()
