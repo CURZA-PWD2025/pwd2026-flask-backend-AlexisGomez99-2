@@ -11,8 +11,6 @@ class Producto(BaseModel):
     stock_actual = db.Column(db.Integer, default=0) 
     stock_minimo = db.Column(db.Integer, default=0) 
     
-    proveedor = db.relationship('Proveedor')
-    categoria = db.relationship('Categoria')
     proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=True)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
 
