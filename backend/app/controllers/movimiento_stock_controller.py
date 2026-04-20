@@ -1,6 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 from app.models.movimiendo_stock import MovimientoStock
 from app.models.producto import Producto
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -102,6 +103,7 @@ class MovimientoStockController(Controller):
                     movimiento_stock.cantidad = cantidad
                     movimiento_stock.motivo = motivo
                     movimiento_stock.producto_id = producto_id
+                    movimiento_stock.updated_at= datetime.now()
                     db.session.commit()
                     return jsonify({'message':'movimiento_stock modificado con exito'}), 200
                 except IntegrityError:

@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from app.models.categoria import Categoria
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -58,6 +59,7 @@ class CategoriaController(Controller):
                 try:
                     categoria.nombre = nombre
                     categoria.descripcion = descripcion
+                    categoria.updated_at = datetime.now()
                     db.session.commit()
                     return jsonify({'message':'categoria modificada con exito'}), 200
                 except IntegrityError:

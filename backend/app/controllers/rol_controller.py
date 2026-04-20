@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from app.models.rol import Rol
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -54,6 +55,7 @@ class RolController (Controller):
             if role:
                 try:
                     role.nombre = nombre
+                    role.updated_at = datetime.now()
                     db.session.commit()
                     return jsonify({'message':'rol modificado con exito'}), 200
                 except IntegrityError:

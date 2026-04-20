@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from app.models.proveedor import Proveedor
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -78,6 +79,7 @@ class ProveedorController(Controller):
                     proveedor.contacto = contacto
                     proveedor.telefono = telefono
                     proveedor.email = email
+                    proveedor.updated_at = datetime.now()
                     db.session.commit()
                     return jsonify({'message':'proveedor modificado con exito'}), 200
                 except IntegrityError:

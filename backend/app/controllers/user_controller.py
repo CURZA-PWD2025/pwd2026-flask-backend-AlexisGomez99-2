@@ -1,6 +1,7 @@
 from typing import Literal
 from sqlalchemy.exc import IntegrityError
 from app.models.user import User
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -61,6 +62,7 @@ class UserController (Controller):
                 try:
                     usuario.nombre = nombre
                     usuario.email = email
+                    usuario.updated_at = datetime.now()
                     db.session.commit()
                     return jsonify({'message':'usuario modificado con exito'}), 200
                 except IntegrityError:
