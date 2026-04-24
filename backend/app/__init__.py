@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask
+from flask_cors import CORS
 from app.models import db
 from app.config import config
 from app.routes import api_v1
@@ -13,6 +14,14 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, resources={
+        r"/api_v1/*": {
+            "origins": ["http://localhost:5173"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"]
+        }
+    }, supports_credentials=True)
+    app.url_map.strict_slashes = False
     env = os.getenv('FLASK_ENV', 'development')
     app.config.from_object(config[env])
     app.register_blueprint(api_v1,url_prefix='/api_v1')

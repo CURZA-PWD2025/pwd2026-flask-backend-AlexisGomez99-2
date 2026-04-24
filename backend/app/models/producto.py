@@ -22,8 +22,11 @@ class Producto(BaseModel):
         data= {
             'id': self.id,
             'nombre': self.nombre,
+            'descripcion': self.nombre,
+            'precio_costo': float(self.precio_costo),
             'precio_venta': float(self.precio_venta),
             'stock_actual': self.stock_actual,
+            'stock_minimo': self.stock_minimo,
             'activo': self.activo,
             'created_at': self.created_at,
             'updated_at': self.updated_at
