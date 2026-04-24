@@ -8,12 +8,12 @@ users = Blueprint('users', __name__, url_prefix='/users')
 
 @users.route('/')
 @jwt_required()
-@rol_access(['admin', 'user'])
+@rol_access(['admin', 'operador'])
 def get_all():
     return UserController.get_all()
 @users.route('/<int:id>')
 @jwt_required()
-@rol_access(['admin', 'user'])
+@rol_access(['admin', 'operador'])
 def show(id):
     return UserController.show(id)
 
@@ -21,13 +21,13 @@ def show(id):
 @jwt_required()
 @rol_access(['admin'])
 def create():
-    return UserController.create(request.get_json())
+    return UserController.create(request.get_json() or None)
 
 @users.route("/<int:id>", methods=['PUT'])
 @jwt_required()
 @rol_access(['admin'])
 def update(id):
-    return  UserController.update(request=request.get_json(), id=id)
+    return  UserController.update(request=request.get_json() or None, id=id)
     
 
 @users.route("/<int:id>", methods=['DELETE'])

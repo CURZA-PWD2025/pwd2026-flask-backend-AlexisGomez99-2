@@ -1,7 +1,7 @@
 from typing import Literal
-
 from sqlalchemy.exc import IntegrityError
 from app.models.user import User
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -24,9 +24,10 @@ class UserController (Controller):
         return jsonify({"message": 'usuario no encontrado'}), 404
     
     @staticmethod
-    def create(request) -> tuple[Response, int]:
-        nombre:str = request['nombre']
-        email:str = request['email']
+    def create(request:dict) -> tuple[Response, int]:
+        nombre= request.get('nombre')
+        email= request.get('email')
+        rol_id= request.get('rol_id')
         error :str | None = None
         if nombre is None:
             error = 'El nombre es requerido'
@@ -35,7 +36,7 @@ class UserController (Controller):
             
         if error is None:
             try:
-                user = User(nombre=nombre, email=email, rol_id=1, password='123456')
+                user = User(nombre=nombre, email=email, rol_id=rol_id)
                 db.session.add(user)
                 db.session.commit()
                 return jsonify({'message': "usuario creado con exito"}), 201
@@ -47,8 +48,8 @@ class UserController (Controller):
         
     @staticmethod
     def update(request, id)->tuple[Response, int]:
-        nombre:str = request['nombre']
-        email:str = request['email']
+        nombre= request.get('nombre')
+        email= request.get('email')
         error :str | None = None
         if nombre is None:
             error = 'El nombre es requerido'
@@ -61,6 +62,7 @@ class UserController (Controller):
                 try:
                     usuario.nombre = nombre
                     usuario.email = email
+                    usuario.updated_at = datetime.now()
                     db.session.commit()
                     return jsonify({'message':'usuario modificado con exito'}), 200
                 except IntegrityError:

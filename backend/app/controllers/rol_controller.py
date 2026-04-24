@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from app.models.rol import Rol
+from datetime import datetime
 from app.models import db
 from flask import Response, jsonify
 from app.controllers import Controller
@@ -23,7 +24,7 @@ class RolController (Controller):
     
     @staticmethod
     def create(request) -> tuple[Response, int]:
-        nombre:str = request['nombre']
+        nombre= request.get('nombre')
         
         error :str | None = None
         if nombre is None:
@@ -43,7 +44,8 @@ class RolController (Controller):
         
     @staticmethod
     def update(request, id)->tuple[Response, int]:
-        nombre:str = request['nombre']
+        nombre= request.get('nombre')
+        
         error :str | None = None
         if nombre is None:
             error = 'El nombre es requerido'
@@ -53,6 +55,7 @@ class RolController (Controller):
             if role:
                 try:
                     role.nombre = nombre
+                    role.updated_at = datetime.now()
                     db.session.commit()
                     return jsonify({'message':'rol modificado con exito'}), 200
                 except IntegrityError:
